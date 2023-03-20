@@ -19,7 +19,7 @@ struct Arc : InsettableShape {
         let modifiedStart = startAngle - angleRotation
         let modifiedEnd = endAngle - angleRotation
         var path = Path()
-        path.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: rect.width / 2 , startAngle: modifiedStart, endAngle: modifiedEnd, clockwise: !clockWise)
+        path.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: rect.width / 2 -  insetAmount , startAngle: modifiedStart, endAngle: modifiedEnd, clockwise: !clockWise)
         return path
     }
     
@@ -33,7 +33,9 @@ struct Arc : InsettableShape {
 struct ContentView: View {
     var body: some View {
         Arc(startAngle: .degrees(-90), endAngle: .degrees(90), clockWise: false)
+            .stroke(.blue , lineWidth: 20)
             .frame(width:300,height: 300)
+        
     }
 }
 
