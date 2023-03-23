@@ -142,11 +142,25 @@ struct ContentView: View {
         //        Slider(value: $colorCycle)
         //            .padding([.horizontal,.vertical])
         
-        screenRenderCircle(amount: amount)
-        Text("Offset")
-        Slider(value: $amount)
-            .padding([.horizontal,.vertical])
-
+//        screenRenderCircle(amount: amount)
+//        Text("Offset")
+//        Slider(value: $amount)
+//            .padding([.horizontal,.vertical])
+        
+//        VStack {
+//            Image(systemName: "circle")
+//                .resizable()
+//                .scaledToFit()
+//                .tint(.indigo)
+//                .frame(width: 200,height: 200)
+//                .saturation(amount)
+//                .blur(radius: (1-amount)*20)
+//            
+//            Text("Saturation and blur")
+//            Slider(value: $amount)
+//                .padding([.horizontal,.vertical])
+//
+//        }
         
     }
     
