@@ -61,8 +61,8 @@ struct ColorCyclingCircle : View {
                     .inset(by: Double(value))
                     .strokeBorder(
                         LinearGradient(colors: [color(for: value, brightness: 1),color(for: value, brightness: 0.5)],
-                                   startPoint: .top,
-                                   endPoint: .bottom),
+                                       startPoint: .top,
+                                       endPoint: .bottom),
                         lineWidth: 2
                     )
             }
@@ -77,9 +77,41 @@ struct ColorCyclingCircle : View {
         }
         return Color(hue: targetHue, saturation: 1, brightness: brightness)
     }
-
+    
 }
 
+struct screenRenderCircle : View{
+    
+    var amount = 0.0
+    
+    var body: some View {
+        VStack {
+            ZStack {
+                Circle()
+                    .fill(Color(red: 1, green: 0, blue: 0))
+                    .frame(width: 200 * amount)
+                    .offset(x : -50, y: -80)
+                    .blendMode(.screen)
+                
+                Circle()
+                    .fill(Color(red: 0, green: 1, blue: 0))
+                    .frame(width: 200 * amount)
+                    .offset(x : 50, y: -80)
+                    .blendMode(.screen)
+                
+                Circle()
+                    .fill(Color(red: 0, green: 0, blue: 1))
+                    .frame(width: 200 * amount)
+                    .blendMode(.screen)
+                
+            }
+            .frame(width: 300,height: 300)
+        }
+        .frame(maxWidth: .infinity,maxHeight: .infinity)
+        .background(.black)
+        .ignoresSafeArea()
+    }
+}
 
 struct ContentView: View {
     
@@ -88,26 +120,34 @@ struct ContentView: View {
     
     @State private var colorCycle = 0.0
     
+    @State private var amount = 0.0
+    
     var body: some View {
-//        VStack {
-//            Flower(patelOffset: patelOffset, patelWidth: patelWidth)
-//                .fill(.red, style: FillStyle(eoFill: true))
-//
-//            Text("Offset")
-//            Slider(value: $patelOffset , in: -40...40)
-//                .padding([.horizontal,.vertical])
-//
-//            Text("Width")
-//            Slider(value: $patelWidth , in: 0...200)
-//                .padding([.horizontal,.vertical])
-//        }
-        ColorCyclingCircle(amount: colorCycle)
-            .frame(width: 300,height: 300)
+        //        VStack {
+        //            Flower(patelOffset: patelOffset, patelWidth: patelWidth)
+        //                .fill(.red, style: FillStyle(eoFill: true))
+        //
+        //            Text("Offset")
+        //            Slider(value: $patelOffset , in: -40...40)
+        //                .padding([.horizontal,.vertical])
+        //
+        //            Text("Width")
+        //            Slider(value: $patelWidth , in: 0...200)
+        //                .padding([.horizontal,.vertical])
+        //        }
+        //        ColorCyclingCircle(amount: colorCycle)
+        //            .frame(width: 300,height: 300)
+        //
+        //        Text("Color Cycle")
+        //        Slider(value: $colorCycle)
+        //            .padding([.horizontal,.vertical])
         
-        Text("Color Cycle")
-        Slider(value: $colorCycle)
+        screenRenderCircle(amount: amount)
+        Text("Offset")
+        Slider(value: $amount)
             .padding([.horizontal,.vertical])
 
+        
     }
     
     struct ContentView_Previews: PreviewProvider {
