@@ -50,24 +50,63 @@ struct Flower : Shape {
     }
 }
 
+struct ColorCyclingCircle : View {
+    var amount = 0.0
+    var steps = 100
+    
+    var body: some View {
+        ZStack {
+            ForEach(0..<100) { value in
+                Circle()
+                    .inset(by: Double(value))
+                    .strokeBorder(
+                        LinearGradient(colors: [color(for: value, brightness: 1),color(for: value, brightness: 0.5)],
+                                   startPoint: .top,
+                                   endPoint: .bottom),
+                        lineWidth: 2
+                    )
+            }
+        }
+    }
+    
+    func color (for value : Int, brightness : Double) -> Color {
+        var targetHue = Double(value) / Double(steps) + amount
+        if targetHue > 1 {
+            targetHue -= 1
+        }
+        return Color(hue: targetHue, saturation: 1, brightness: brightness)
+    }
+
+}
+
+
 struct ContentView: View {
     
     @State private var patelOffset = -20.0
     @State private var patelWidth = 100.0
     
+    @State private var colorCycle = 0.0
+    
     var body: some View {
-        VStack {
-            Flower(patelOffset: patelOffset, patelWidth: patelWidth)
-                .fill(.red, style: FillStyle(eoFill: true))
-            
-            Text("Offset")
-            Slider(value: $patelOffset , in: -40...40)
-                .padding([.horizontal,.vertical])
-            
-            Text("Width")
-            Slider(value: $patelWidth , in: 0...200)
-                .padding([.horizontal,.vertical])
-        }
+//        VStack {
+//            Flower(patelOffset: patelOffset, patelWidth: patelWidth)
+//                .fill(.red, style: FillStyle(eoFill: true))
+//
+//            Text("Offset")
+//            Slider(value: $patelOffset , in: -40...40)
+//                .padding([.horizontal,.vertical])
+//
+//            Text("Width")
+//            Slider(value: $patelWidth , in: 0...200)
+//                .padding([.horizontal,.vertical])
+//        }
+        ColorCyclingCircle(amount: colorCycle)
+            .frame(width: 300,height: 300)
+        
+        Text("Color Cycle")
+        Slider(value: $colorCycle)
+            .padding([.horizontal,.vertical])
+
     }
     
     struct ContentView_Previews: PreviewProvider {
